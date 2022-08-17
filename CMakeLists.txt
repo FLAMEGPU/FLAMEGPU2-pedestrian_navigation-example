@@ -2,16 +2,17 @@
 cmake_minimum_required(VERSION VERSION 3.18 FATAL_ERROR)
 
 # Name the project and set languages
-project(example CUDA CXX)
+project(pedestrian_navigation CUDA CXX)
 
 # Option to enable/disable building the visualisation
-option(VISUALISATION "Enable visualisation support" OFF)
+option(VISUALISATION "Enable visualisation support (Recommended for the Pedestrian Navigation Example)" ON)
 
 # Optionaly set the version of flamegpu which should be used.
 # Use a branch name such as `master`, or a tagged version such as `v2.0.0-alpha`
-set(FLAMEGPU_VERSION "v2.0.0-alpha.2" CACHE STRING "FLAMEGPU/FLAMEGPU2 git branch or tag to use")
+# dee1934ec4751e56f217b9d97b842899de4b1ea7 is the first hash to fully support this example
+set(FLAMEGPU_VERSION "dee1934ec4751e56f217b9d97b842899de4b1ea7" CACHE STRING "FLAMEGPU/FLAMEGPU2 git branch or tag to use")
 # If the above version is a hash instead, also set FLAMEGPU_VERSION_ALLOW_HASH to ON
-# set(FLAMEGPU_VERSION_ALLOW_HASH "ON")
+set(FLAMEGPU_VERSION_ALLOW_HASH "ON")
 
 # Our core dependency is FLAMEGPU2 lib, first lets find it
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/flamegpu2.cmake)
@@ -37,4 +38,4 @@ target_include_directories("${PROJECT_NAME}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR
 set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT "${PROJECT_NAME}")
 
 # Set the default (visual studio) debugger configuration
-set_target_properties("${PROJECT_NAME}" PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" VS_DEBUGGER_COMMAND_ARGUMENTS "-s 10")
+set_target_properties("${PROJECT_NAME}" PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" VS_DEBUGGER_COMMAND_ARGUMENTS "-i map.xml -s 0")

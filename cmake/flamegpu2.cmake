@@ -22,7 +22,12 @@ if (FLAMEGPU_ROOT)
         # update the value to the non abs version, in local and parent scope.
         set(FLAMEGPU_ROOT "${FLAMEGPU_ROOT_ABS}")
         # set(FLAMEGPU_ROOT "${FLAMEGPU_ROOT_ABS}" PARENT_SCOPE) # Parent scope does not exist
-        # And set up the visualisation build 
+        # Now disable extra bells/whistles
+        set(NO_EXAMPLES ON CACHE INTERNAL "-")
+        set(BUILD_TESTS OFF CACHE BOOL "-")
+        set(USE_GLM ON CACHE BOOL "-")
+        mark_as_advanced(FORCE BUILD_TESTS)
+        # And set up the build 
         add_subdirectory(${FLAMEGPU_ROOT_ABS} ${CMAKE_CURRENT_BINARY_DIR}/_deps/flamegpu2-build)
     else()
         # Send a fatal error if the flamegpu root passed is invalid.
@@ -63,11 +68,12 @@ else()
     # Fetch and populate the content if required.
     FetchContent_GetProperties(flamegpu2)
     if(NOT flamegpu2_POPULATED)
-        FetchContent_Populate(flamegpu2)   
+        FetchContent_Populate(flamegpu2)
 
         # Now disable extra bells/whistles and add flamegpu2 as a dependency
         set(NO_EXAMPLES ON CACHE INTERNAL "-")
         set(BUILD_TESTS OFF CACHE BOOL "-")
+        set(USE_GLM ON CACHE BOOL "-")
         mark_as_advanced(FORCE BUILD_TESTS)
 
         # Add the subdirectory

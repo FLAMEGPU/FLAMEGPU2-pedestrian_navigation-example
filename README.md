@@ -1,17 +1,9 @@
-# FLAME GPU 2 Template Example for CUDA C++
+# Pedestrian Navigation Example
 
-This repository acts as an example to be used as a template for creating standalone FLAME GPU 2 projects which use the CUDA C++ interface.
+This example implements a FLAME GPU 2 copy of the original FLAME GPU 1 pedestrian navigation example.
 
-[FLAMEGPU/FLAMEGPU2](https://github.com/FLAMEGPU/FLAMEGPU2) is downloaded via CMake and configured as a dependency of the project.
+It provides a demonstration of keyframe animated agents, visible in [this video](https://www.youtube.com/watch?v=7Rm5n5yDDg4&loop=0).
 
-The version of FLAME GPU fetched is pinned to a specific release of FLAME GPU, in case of API breaking changes.
-This is controlled using the `FLAMEGPU_VERSION` CMake variable, which can be modified in `CMakeLists.txt`, or as a configuration argument.
-
-For details on how to develop a model using FLAME GPU 2, refer to the [userguide & API documentation](https://docs.flamegpu.com/).
-
-## Python Interface
-
-FLAME GPU 2 also provides a python-based interface for writing models. If you wish to use this instead of the CUDA C++ interface, see [FLAMEGPU/FLAMEGPU2-python-example-template](https://github.com/FLAMEGPU/FLAMEGPU2-python-example-template).
 
 ## Requirements
 
