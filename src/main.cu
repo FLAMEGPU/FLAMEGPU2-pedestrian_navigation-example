@@ -477,7 +477,7 @@ int main(int argc, const char ** argv) {
     {
         m_vis.setInitialCameraLocation(0.873f, 1.740f, 0.800f);
         m_vis.setInitialCameraTarget(0.873f - 0.489f, 1.740f - 0.741f, 0.800f - 0.459f);
-        m_vis.setSimulationSpeed(25);
+        m_vis.setSimulationSpeed(50);
         m_vis.setCameraSpeed(0.0005f);
         m_vis.setViewClips(0.00001f, 5.0f);  // Model environment is in the range [-1.0f, 1.0f]
         {
@@ -518,6 +518,44 @@ int main(int argc, const char ** argv) {
                 pen.addVertex(ENV_MIN, 1.0f, i);
                 pen.addVertex(ENV_MAX, 1.0f, i);
             }
+        }
+        // Specify a UI for changing settings
+        {
+            auto ui1 = m_vis.newUIPanel("Exit Settings");
+            ui1.newSection("Exit Emission Rate");
+            // Global emission rate (Nope)
+            ui1.newEnvironmentPropertySlider<float>("EMMISION_RATE_EXIT1", 0.0f, 100.0f);
+            ui1.newEnvironmentPropertySlider<float>("EMMISION_RATE_EXIT2", 0.0f, 100.0f);
+            ui1.newEnvironmentPropertySlider<float>("EMMISION_RATE_EXIT3", 0.0f, 100.0f);
+            ui1.newEnvironmentPropertySlider<float>("EMMISION_RATE_EXIT4", 0.0f, 100.0f);
+            ui1.newEnvironmentPropertySlider<float>("EMMISION_RATE_EXIT5", 0.0f, 100.0f);
+            ui1.newEnvironmentPropertySlider<float>("EMMISION_RATE_EXIT6", 0.0f, 100.0f);
+            ui1.newEnvironmentPropertySlider<float>("EMMISION_RATE_EXIT7", 0.0f, 100.0f);
+            ui1.newEndSection();
+            ui1.newSection("Target Exit Chance");
+            ui1.newEnvironmentPropertyInput<int>("EXIT1_PROBABILITY", 1, 2);
+            ui1.newEnvironmentPropertyInput<int>("EXIT2_PROBABILITY", 1, 2);
+            ui1.newEnvironmentPropertyInput<int>("EXIT3_PROBABILITY", 1, 2);
+            ui1.newEnvironmentPropertyInput<int>("EXIT4_PROBABILITY", 1, 2);
+            ui1.newEnvironmentPropertyInput<int>("EXIT5_PROBABILITY", 1, 2);
+            ui1.newEnvironmentPropertyInput<int>("EXIT6_PROBABILITY", 1, 2);
+            ui1.newEnvironmentPropertyInput<int>("EXIT7_PROBABILITY", 1, 2);
+            ui1.newEndSection();
+            ui1.newSection("Exit Open");
+            ui1.newEnvironmentPropertyToggle<int>("EXIT1_STATE");
+            ui1.newEnvironmentPropertyToggle<int>("EXIT2_STATE");
+            ui1.newEnvironmentPropertyToggle<int>("EXIT3_STATE");
+            ui1.newEnvironmentPropertyToggle<int>("EXIT4_STATE");
+            ui1.newEnvironmentPropertyToggle<int>("EXIT5_STATE");
+            ui1.newEnvironmentPropertyToggle<int>("EXIT6_STATE");
+            ui1.newEnvironmentPropertyToggle<int>("EXIT7_STATE");
+            ui1.newEndSection();
+            auto ui2 = m_vis.newUIPanel("Movement Settings");
+            ui2.newEnvironmentPropertySlider<float>("TIME_SCALER", 0.0001f, 0.001f);
+            ui2.newEnvironmentPropertySlider<float>("STEER_WEIGHT", 0.0f, 1.f);
+            ui2.newEnvironmentPropertySlider<float>("AVOID_WEIGHT", 0.0f, 1.f);
+            ui2.newEnvironmentPropertySlider<float>("COLLISION_WEIGHT", 0.0f, 1.f);
+            ui2.newEnvironmentPropertySlider<float>("GOAL_WEIGHT", 0.0f, 1.f);
         }
     }
     m_vis.activate();
