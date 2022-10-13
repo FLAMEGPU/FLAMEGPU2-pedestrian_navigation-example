@@ -2,7 +2,7 @@
 
 This example implements a FLAME GPU 2 copy of the original FLAME GPU 1 pedestrian navigation example.
 
-It provides a demonstration of keyframe animated agents, visible in [this video](https://www.youtube.com/watch?v=7Rm5n5yDDg4&loop=0).
+It provides a demonstration of keyframe animated agents and user interfaces, visible in [this video](https://www.youtube.com/watch?v=9jPfBs81XmE).
 
 
 ## Requirements
