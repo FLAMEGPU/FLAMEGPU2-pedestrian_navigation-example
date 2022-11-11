@@ -311,13 +311,13 @@ int main(int argc, const char ** argv) {
     flamegpu::ModelDescription model("Pedestrian Navigation");
 
     {   // Location message
-        flamegpu::MessageSpatial2D::Description &message = model.newMessage<flamegpu::MessageSpatial2D>("pedestrian_location");
+        flamegpu::MessageSpatial2D::Description message = model.newMessage<flamegpu::MessageSpatial2D>("pedestrian_location");
         message.setRadius(0.025f);
         message.setMin(-1.0f, -1.0f);
         message.setMax(1.0f, 1.0f);
     }
     {   // Navmap cell message
-        flamegpu::MessageArray2D::Description& message = model.newMessage<flamegpu::MessageArray2D>("navmap_cell");
+        flamegpu::MessageArray2D::Description message = model.newMessage<flamegpu::MessageArray2D>("navmap_cell");
         message.setDimensions(256, 256);
         message.newVariable<int>("x");
         message.newVariable<int>("y");
@@ -341,7 +341,7 @@ int main(int argc, const char ** argv) {
         message.newVariable<float>("exit6_y");
     }
     {   // Pedestrian agent
-        flamegpu::AgentDescription& agent = model.newAgent("agent");
+        flamegpu::AgentDescription agent = model.newAgent("agent");
         agent.newVariable<float>("x");
         agent.newVariable<float>("y");
         agent.newVariable<float>("velx", 0.0f);
@@ -358,13 +358,13 @@ int main(int argc, const char ** argv) {
 
         agent.newFunction("output_pedestrian_location", output_pedestrian_location).setMessageOutput("pedestrian_location");
         agent.newFunction("avoid_pedestrians", avoid_pedestrians).setMessageInput("pedestrian_location");
-        flamegpu::AgentFunctionDescription &ff_fn = agent.newFunction("force_flow", force_flow);
+        flamegpu::AgentFunctionDescription ff_fn = agent.newFunction("force_flow", force_flow);
         ff_fn.setMessageInput("navmap_cell");
         ff_fn.setAllowAgentDeath(true);
         agent.newFunction("move", move);
     }
     {   // Navmap agent
-        flamegpu::AgentDescription& navmap = model.newAgent("navmap");
+        flamegpu::AgentDescription navmap = model.newAgent("navmap");
         navmap.newVariable<int>("x");
         navmap.newVariable<int>("y");
         navmap.newVariable<int>("exit_no");
@@ -394,7 +394,7 @@ int main(int argc, const char ** argv) {
 #endif
 
         navmap.newFunction("output_navmap_cells", output_navmap_cells).setMessageOutput("navmap_cell");
-        flamegpu::AgentFunctionDescription& gp_fn = navmap.newFunction("generate_pedestrians", generate_pedestrians);
+        flamegpu::AgentFunctionDescription gp_fn = navmap.newFunction("generate_pedestrians", generate_pedestrians);
         gp_fn.setAgentOutput("agent");
         gp_fn.setMessageInput("navmap_cell");  // Don't actually read these messages, just makes some things simpler
     }
@@ -403,7 +403,7 @@ int main(int argc, const char ** argv) {
      * GLOBALS
      */
     {
-        flamegpu::EnvironmentDescription  &env = model.Environment();
+        flamegpu::EnvironmentDescription env = model.Environment();
         env.newProperty<float>("EMMISION_RATE_EXIT1", 10.0f);
         env.newProperty<float>("EMMISION_RATE_EXIT2", 10.0f);
         env.newProperty<float>("EMMISION_RATE_EXIT3", 10.0f);
@@ -443,24 +443,24 @@ int main(int argc, const char ** argv) {
      * Control flow
      */
     {   // Layer #1
-        flamegpu::LayerDescription  &layer = model.newLayer();
+        flamegpu::LayerDescription layer = model.newLayer();
         layer.addAgentFunction(generate_pedestrians);
     }
     {   // Layer #2
-        flamegpu::LayerDescription  &layer = model.newLayer();
+        flamegpu::LayerDescription layer = model.newLayer();
         layer.addAgentFunction(output_pedestrian_location);
         layer.addAgentFunction(output_navmap_cells);
     }
     {   // Layer #3
-        flamegpu::LayerDescription& layer = model.newLayer();
+        flamegpu::LayerDescription layer = model.newLayer();
         layer.addAgentFunction(avoid_pedestrians);
     }
     {   // Layer #4
-        flamegpu::LayerDescription& layer = model.newLayer();
+        flamegpu::LayerDescription layer = model.newLayer();
         layer.addAgentFunction(force_flow);
     }
     {   // Layer #5
-        flamegpu::LayerDescription& layer = model.newLayer();
+        flamegpu::LayerDescription layer = model.newLayer();
         layer.addAgentFunction(move);
     }
 
@@ -473,7 +473,7 @@ int main(int argc, const char ** argv) {
      * Create visualisation
      */
 #ifdef VISUALISATION
-    flamegpu::visualiser::ModelVis  &m_vis = cudaSimulation.getVisualisation();
+    flamegpu::visualiser::ModelVis  m_vis = cudaSimulation.getVisualisation();
     {
         m_vis.setInitialCameraLocation(0.873f, 1.740f, 0.800f);
         m_vis.setInitialCameraTarget(0.873f - 0.489f, 1.740f - 0.741f, 0.800f - 0.459f);
@@ -481,7 +481,7 @@ int main(int argc, const char ** argv) {
         m_vis.setCameraSpeed(0.0005f);
         m_vis.setViewClips(0.00001f, 5.0f);  // Model environment is in the range [-1.0f, 1.0f]
         {
-            auto& pedestrian = m_vis.addAgent("agent");
+            auto pedestrian = m_vis.addAgent("agent");
             // Position vars are named x, y; so they are used by default
             pedestrian.setYVariable("height");
             pedestrian.setZVariable("y");
@@ -493,7 +493,7 @@ int main(int argc, const char ** argv) {
             pedestrian.setColor(flamegpu::visualiser::DiscreteColor<int>("exit_no", flamegpu::visualiser::Stock::Palettes::DARK2, 1));
         }
         {
-            auto& navmap = m_vis.addAgent("navmap");
+            auto navmap = m_vis.addAgent("navmap");
             navmap.clearYVariable();
             navmap.setXVariable("x_vis");  // Can't vis int vars
             navmap.setYVariable("y_vis");  // Want to offset height
