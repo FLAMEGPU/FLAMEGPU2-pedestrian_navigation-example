@@ -9,7 +9,7 @@ option(VISUALISATION "Enable visualisation support (Recommended for the Pedestri
 
 # Optionaly set the version of flamegpu which should be used.
 # Use a branch name such as `master`, or a tagged version such as `v2.0.0-alpha`
-set(FLAMEGPU_VERSION "ee709acfa67d9e680620d0dbe0a198569cacfbb7" CACHE STRING "FLAMEGPU/FLAMEGPU2 git branch or tag to use")
+set(FLAMEGPU_VERSION "1cacd900437f88d680cef6d1c6a098f0b0b703ed" CACHE STRING "FLAMEGPU/FLAMEGPU2 git branch or tag to use")
 # If the above version is a hash instead, also set FLAMEGPU_VERSION_ALLOW_HASH to ON
 set(FLAMEGPU_VERSION_ALLOW_HASH "ON")
 
