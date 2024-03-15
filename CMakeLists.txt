@@ -5,13 +5,13 @@ cmake_minimum_required(VERSION VERSION 3.18 FATAL_ERROR)
 project(pedestrian_navigation CUDA CXX)
 
 # Option to enable/disable building the visualisation
-option(VISUALISATION "Enable visualisation support (Recommended for the Pedestrian Navigation Example)" ON)
+option(FLAMEGPU_VISUALISATION "Enable visualisation support (Recommended for the Pedestrian Navigation Example)" ON)
 
 # Optionaly set the version of flamegpu which should be used.
 # Use a branch name such as `master`, or a tagged version such as `v2.0.0-alpha`
-set(FLAMEGPU_VERSION "1cacd900437f88d680cef6d1c6a098f0b0b703ed" CACHE STRING "FLAMEGPU/FLAMEGPU2 git branch or tag to use")
+set(FLAMEGPU_VERSION "v2.0.0-rc.1" CACHE STRING "FLAMEGPU/FLAMEGPU2 git branch or tag to use")
 # If the above version is a hash instead, also set FLAMEGPU_VERSION_ALLOW_HASH to ON
-set(FLAMEGPU_VERSION_ALLOW_HASH "ON")
+# set(FLAMEGPU_VERSION_ALLOW_HASH "ON")
 
 # Our core dependency is FLAMEGPU2 lib, first lets find it
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/flamegpu2.cmake)
@@ -28,7 +28,7 @@ SET(ALL_SRC
 )
 
 # Add the executable and set required flags for the target
-add_flamegpu_executable("${PROJECT_NAME}" "${ALL_SRC}" "${FLAMEGPU_ROOT}" "${PROJECT_BINARY_DIR}" TRUE)
+flamegpu_add_executable("${PROJECT_NAME}" "${ALL_SRC}" "${FLAMEGPU_ROOT}" "${PROJECT_BINARY_DIR}" TRUE)
 
 # Add src directory to include path
 target_include_directories("${PROJECT_NAME}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")

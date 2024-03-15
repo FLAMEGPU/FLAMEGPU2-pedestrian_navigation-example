@@ -25,7 +25,7 @@ if (FLAMEGPU_ROOT)
         # Now disable extra bells/whistles
         set(NO_EXAMPLES ON CACHE INTERNAL "-")
         set(BUILD_TESTS OFF CACHE BOOL "-")
-        set(USE_GLM ON CACHE BOOL "-")
+        set(FLAMEGPU_ENABLE_GLM ON CACHE BOOL "-")
         mark_as_advanced(FORCE BUILD_TESTS)
         # And set up the build 
         add_subdirectory(${FLAMEGPU_ROOT_ABS} ${CMAKE_CURRENT_BINARY_DIR}/_deps/flamegpu2-build)
@@ -73,7 +73,7 @@ else()
         # Now disable extra bells/whistles and add flamegpu2 as a dependency
         set(NO_EXAMPLES ON CACHE INTERNAL "-")
         set(BUILD_TESTS OFF CACHE BOOL "-")
-        set(USE_GLM ON CACHE BOOL "-")
+        set(FLAMEGPU_ENABLE_GLM ON CACHE BOOL "-")
         mark_as_advanced(FORCE BUILD_TESTS)
 
         # Add the subdirectory
