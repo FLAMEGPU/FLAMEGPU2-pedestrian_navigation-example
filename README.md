@@ -11,18 +11,16 @@ Building FLAME GPU has the following requirements. There are also optional depen
 
 + [CMake](https://cmake.org/download/) `>= 3.18`
 + [CUDA](https://developer.nvidia.com/cuda-downloads) `>= 11.0` and a Compute Capability `>= 3.5` NVIDIA GPU.
-  + CUDA `>= 10.0` currently works, but support will be removed in a future release.
 + C++17 capable C++ compiler (host), compatible with the installed CUDA version
   + [Microsoft Visual Studio 2019](https://visualstudio.microsoft.com/) (Windows)
-  + [make](https://www.gnu.org/software/make/) and [GCC](https://gcc.gnu.org/) `>= 7`
-  + Older C++ compilers which support C++14 may currently work, but support will be dropped in a future release.
+  + [make](https://www.gnu.org/software/make/) and [GCC](https://gcc.gnu.org/) `>= 8.1` (Linux)
 + [git](https://git-scm.com/)
 
 Optionally:
 
 + [cpplint](https://github.com/cpplint/cpplint) for linting code
 + [Doxygen](http://www.doxygen.nl/) to build the documentation
-+ [Python](https://www.python.org/) `>= 3.6` for python integration
++ [Python](https://www.python.org/) `>= 3.8` for python integration
 + [swig](http://www.swig.org/) `>= 4.0.2` for python integration
   + Swig `4.x` will be automatically downloaded by CMake if not provided (if possible).
 + [FLAMEGPU2-visualiser](https://github.com/FLAMEGPU/FLAMEGPU2-visualiser) dependencies
@@ -55,13 +53,17 @@ For example, to configure CMake for `Release` builds, for consumer Pascal GPUs (
 mkdir -p build && cd build
 
 # Configure CMake from the command line passing configure-time options. 
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCUDA_ARCH=61
+cmake .. -DCMAKE_BUILD_TYPE=Release -CMAKE_CUDA_ARCHITECTURES=61
 
 # Build the target(s)
 cmake --build . --target all -j 8
 
 # Alternatively make can be invoked directly
 make flamegpu all -j8
+
+# Run the compiled model with the input file, for unlimited steps
+cd bin/Release
+./pedestrian_navigation -i ../../../map.xml -s 0
 
 ```
 
@@ -78,7 +80,7 @@ mkdir build
 cd build
 
 REM Configure CMake from the command line, specifying the -A and -G options. Alternatively use the GUI
-cmake .. -A x64 -G "Visual Studio 16 2019" -DCUDA_ARCH=61
+cmake .. -A x64 -G "Visual Studio 16 2019" -CMAKE_CUDA_ARCHITECTURES=61
 
 REM You can then open Visual Studio manually from the .sln file, or via:
 cmake --open . 
@@ -92,7 +94,7 @@ cmake --build . --config Release --target ALL_BUILD --verbose
 | ------------------------ | ----------------- | ---------------------------------------------------------------------------------------------------------- |
 | `CMAKE_BUILD_TYPE`       | `Release`/`Debug` | Select the build configuration for single-target generators such as `make`                                 |
 | `SEATBELTS`              | `ON`/`OFF`        | Enable / Disable additional runtime checks which harm performance but increase usability. Default `ON`     |
-| `CUDA_ARCH`              | `"52 60 70 80"`   | Select [CUDA Compute Capabilities](https://developer.nvidia.com/cuda-gpus) to build/optimise for, as a space or `;` separated list. Defaults to `""` |
+| `CMAKE_CUDA_ARCHITECTURES` | e.g `60`, `"60;70"` | [CUDA Compute Capabilities][cuda-CC] to build/optimise for, as a `;` separated list. See [CMAKE_CUDA_ARCHITECTURES][cmake-CCA]. Defaults to `all-major` or equivalent. Alternatively use the `CUDAARCHS` environment variable. |
 | `VISUALISATION`          | `ON`/`OFF`        | Enable Visualisation. Default `OFF`.                                                                       |
 | `VISUALISATION_ROOT`     | `path/to/vis`     | Provide a path to a local copy of the [FLAMEGPU/FLAMEGPU2-visualiser](https://github.com/FLAMEGPU/FLAMEGPU2-visualiser) repository |
 | `USE_NVTX`               | `ON`/`OFF`        | Enable NVTX markers for improved profiling. Default `OFF`                                                  |
@@ -115,8 +117,8 @@ cmake -LH ..
 | `all`          | Linux target containing default set of targets, including everything but the documentation and lint targets   |
 | `ALL_BUILD`    | The windows equivalent of `all`                                                                               |
 | `all_lint`     | Run all available Linter targets                                                                              |
-| `example`      | The `example` target created by the `CMakeLists.txt` in the root of this repository                           |
-| `lint_example` | Lint the `example` target.                                                                                    |
+| `pedestrian_navigation`      | The `pedestrian_navigation` target created by the `CMakeLists.txt` in the root of this repository                           |
+| `lint_pedestrian_navigation` | Lint the `pedestrian_navigation` target.                                                                                    |
 | `flamegpu`     | Build the FLAME GPU static library                                                                                |
 | `docs`         | The FLAME GPU API documentation (if available)                                                                |
 
