@@ -9,7 +9,7 @@ option(FLAMEGPU_VISUALISATION "Enable visualisation support (Recommended for the
 
 # Optionaly set the version of flamegpu which should be used.
 # Use a branch name such as `master`, or a tagged version such as `v2.0.0-alpha`
-set(FLAMEGPU_VERSION "v2.0.0-rc.1" CACHE STRING "FLAMEGPU/FLAMEGPU2 git branch or tag to use")
+set(FLAMEGPU_VERSION "v2.0.0-rc.2" CACHE STRING "FLAMEGPU/FLAMEGPU2 git branch or tag to use")
 # If the above version is a hash instead, also set FLAMEGPU_VERSION_ALLOW_HASH to ON
 # set(FLAMEGPU_VERSION_ALLOW_HASH "ON")
 
