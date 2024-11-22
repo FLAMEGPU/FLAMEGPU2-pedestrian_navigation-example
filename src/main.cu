@@ -468,6 +468,12 @@ int main(int argc, const char ** argv) {
      * Create Model Runner
      */
     flamegpu::CUDASimulation  cudaSimulation(model, argc, argv);
+    
+    if (cudaSimulation.SimulationConfig().input_file.empty()) {
+        fprintf(stderr, "The pedestrian navigation model expects to be passed the input file 'map.xml' found in the root of the repository.\n");
+        fprintf(stderr, "e.g. ./pedestrian_navigation -i ../../../map.xml -s 0\n");
+        return EXIT_FAILURE;
+    }
 
     /**
      * Create visualisation
